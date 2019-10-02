@@ -15,14 +15,18 @@ app = Flask(__name__)
 def strava_response():
     if request.args.get('hub.mode') == 'subscribe':
         payload = {'hub.challenge': request.args['hub.challenge']}
-        jsonpayload = json.dumps(payload)
+        jsonpayload = json.dumps(payload)  # {"hub.challenge": "0f1b641969427f4b"}  << output generated
     return json.dumps(payload)
 
 """
-
-
+I tried submitting a post request and got a 'non verifiable code'
 r = requests.post(url = strava_webhook_url, data = {'client_id': client_id, "client_secret": client_secret, 'callback_url': f'{weblink}/stravaresponse',
                                                     'verify_token': 'STRAVA'})
+                                                    
+print(r.text)
+
+{"message":"Bad Request","errors":[{"resource":"PushSubscription","field":"callback url","code":"not verifiable"}]}
+
 """
 
 if __name__ == "__main__":
